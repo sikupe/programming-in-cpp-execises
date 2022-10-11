@@ -196,7 +196,7 @@ TEST(MatrixTest, TestReverse) {
     EXPECT_EQ(matrix.get(2, 1), 6);
 }
 
-TEST(MatrixTest, TestIsNegativeFalse) {
+TEST(MatrixTest, TestIsNegativeFalse1) {
     auto matrix = create_matrix_filled();
 
     auto is_negative = matrix.is_negative();
@@ -204,10 +204,21 @@ TEST(MatrixTest, TestIsNegativeFalse) {
     EXPECT_FALSE(is_negative);
 }
 
-TEST(MatrixTest, TestIsNegativeTrue) {
+TEST(MatrixTest, TestIsNegativeFalse2) {
     auto matrix = create_matrix_filled();
 
     matrix.set(0, 0, -1);
+
+    auto is_negative = matrix.is_negative();
+
+    EXPECT_FALSE(is_negative);
+}
+
+TEST(MatrixTest, TestIsNegativeTrue) {
+    auto matrix = IntegerMatrix(1, 2);
+
+    matrix.set(0, 0, -1);
+    matrix.set(0, 1, -1);
 
     auto is_negative = matrix.is_negative();
 

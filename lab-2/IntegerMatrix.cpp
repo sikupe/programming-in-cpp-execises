@@ -178,12 +178,12 @@ void IntegerMatrix::reverse() {
 bool IntegerMatrix::is_negative() const {
     for (int x = 0; x < width; ++x) {
         for (int y = 0; y < height; ++y) {
-            if (matrix[x][y] < 0) {
-                return true;
+            if (matrix[x][y] >= 0) {
+                return false;
             }
         }
     }
-    return false;
+    return true;
 }
 
 int IntegerMatrix::zero_count() const {
