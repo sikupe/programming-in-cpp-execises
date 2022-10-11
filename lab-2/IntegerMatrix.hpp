@@ -13,17 +13,18 @@
 
 using namespace std;
 
+int int_width(int value);
+
 class IntegerMatrix {
 private:
     vector<vector<int>> matrix;
-    unsigned int width;
-    unsigned int height;
+    int width;
+    int height;
 
     void ensure_positive(int i) const;
     void ensure_in_range_x(int x) const;
     void ensure_in_range_y(int y) const;
     void ensure_in_range(int x, int y) const;
-    int min_column_width(int column) const;
 public:
     IntegerMatrix(int width, int height) ;
 
@@ -58,6 +59,8 @@ public:
     bool is_negative() const;
 
     int zero_count() const;
+
+    int min_column_width(int column) const;
 };
 
 #endif //INTEGER_MATRIX_INTEGERMATRIX_H

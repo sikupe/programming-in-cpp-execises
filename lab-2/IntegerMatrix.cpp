@@ -13,7 +13,7 @@ int int_width(int i) {
     if (i == 0) {
         return 1;
     }
-    return (int) ceil(log10(i));
+    return (int) floor(log10(i)) + 1;
 }
 
 void IntegerMatrix::ensure_positive(int i) const {
@@ -39,9 +39,10 @@ void IntegerMatrix::ensure_in_range(int x, int y) const {
     ensure_in_range_y(y);
 }
 
-int IntegerMatrix::min_column_width(int column) const {
+int IntegerMatrix::min_column_width(int column_index) const {
     int current_width = 1;
-    for (auto value: get_column(column)) {
+    auto column = get_column(column_index);
+    for (auto value : column) {
         auto char_width = int_width(value);
         if (char_width > current_width) {
             current_width = char_width;
@@ -72,11 +73,13 @@ int IntegerMatrix::get(int x, int y) const {
 
 void IntegerMatrix::print() const {
     for (int y = 0; y < height; y++) {
-        for (int x= 0; x < width; x++) {
+        for (int x = 0; x < width; x++) {
             auto value = get(x, y);
             std::cout << " ";
-            auto min_width = min_column_width(x);
-            for (int i = int_width(value); i < min_width; i++) {
+            auto value_width = int_width(value);
+            auto column_width = min_column_width(x);
+            auto whitespace_fillup_width = column_width - value_width;
+            for (int i = 0; i < whitespace_fillup_width; i++) {
                 std::cout << " ";
             }
             std::cout << to_string(value) << " ";
@@ -96,7 +99,7 @@ void IntegerMatrix::set_width(int new_width) {
 
 void IntegerMatrix::set_height(int new_height) {
     ensure_positive(new_height);
-    for (auto row : matrix) {
+    for (auto row: matrix) {
         row.resize(new_height);
         for (int i = height; i < new_height; i++) {
             row[i] = 0;
@@ -138,7 +141,7 @@ const vector<vector<int>> IntegerMatrix::get_columns() const {
 }
 
 void IntegerMatrix::clear() {
-    for (auto row : matrix) {
+    for (auto row: matrix) {
         row.clear();
     }
 }
@@ -157,11 +160,11 @@ void IntegerMatrix::reverse() {
     if (previous_width > previous_height) {
         set_height(previous_width);
     } else if (previous_height > previous_width) {
-        set_width(previous_width);
+        set_width(previous_height);
     }
 
     for (int x = 0; x < previous_width; ++x) {
-        for (int y = 0; y < previous_height; ++y) {
+        for (int y = x; y < previous_height; ++y) {
             auto buffer = matrix[x][y];
             matrix[x][y] = matrix[y][x];
             matrix[y][x] = buffer;

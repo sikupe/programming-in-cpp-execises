@@ -19,6 +19,7 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 add_executable(matrix_test matrix_test.cpp IntegerMatrix.hpp IntegerMatrix.cpp)
+add_executable(main main.cpp IntegerMatrix.hpp IntegerMatrix.cpp)
 
 target_link_libraries(matrix_test GTest::gtest_main)
 
