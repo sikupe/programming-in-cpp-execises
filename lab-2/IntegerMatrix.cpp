@@ -54,6 +54,8 @@ IntegerMatrix::IntegerMatrix(int width, int height) {
     ensure_positive(width);
     ensure_positive(height);
     matrix = vector<vector<int>>(width, vector<int>(height));
+    this->width = width;
+    this->height = height;
 }
 
 void IntegerMatrix::set(int x, int y, int value) {
